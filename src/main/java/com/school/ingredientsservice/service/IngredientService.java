@@ -20,4 +20,6 @@ public class IngredientService {
     public Ingredient saveIngredient(Ingredient ingredient) {
         return ingredientRepository.save(ingredient);
     }
+
+    public void deleteIngredientById(Long ingredientId) { ingredientRepository.deleteById(ingredientId); }
 }

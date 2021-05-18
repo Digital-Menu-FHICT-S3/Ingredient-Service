@@ -15,12 +15,17 @@ public class IngredientController {
     private IngredientService ingredientService;
 
     @GetMapping("/all")
-    public List<Ingredient> ingredients(@RequestBody Ingredient ingredient) {
+    public List<Ingredient> ingredients() {
         return ingredientService.getAllIngredients();
     }
 
     @PostMapping("/create")
     public Ingredient saveIngredient(@RequestBody Ingredient ingredient) {
         return ingredientService.saveIngredient(ingredient);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public void deleteIngredient(@PathVariable("id") Long ingredientId) {
+        ingredientService.deleteIngredientById(ingredientId);
     }
 }
