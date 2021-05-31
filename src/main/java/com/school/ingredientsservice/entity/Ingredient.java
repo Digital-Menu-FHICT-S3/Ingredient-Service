@@ -18,6 +18,5 @@ public class Ingredient {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long ingredientId;
     private String name;
-    private Long stockId;
-
+    private int amount;
 }

@@ -36,18 +36,6 @@ public class IngredientService {
         ingredientRepository.deleteById(ingredientId);
     }
 
-    public ResponseTemplateVO getIngredientWithStock(Long ingredientId) {
-        ResponseTemplateVO vo = new ResponseTemplateVO();
-        Ingredient ingredient = ingredientRepository.findByIngredientId(ingredientId);
-
-        Stock stock = restTemplate.getForObject("http://STOCK-SERVICE/stock/" + ingredient.getStockId(), Stock.class);
-
-        vo.setIngredient(ingredient);
-        vo.setStock(stock);
-
-        return vo;
-    }
-
     public Ingredient findIngredientById(Long ingredientId) {
         return ingredientRepository.findByIngredientId(ingredientId);
     }
