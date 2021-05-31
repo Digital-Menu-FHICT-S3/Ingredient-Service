@@ -40,18 +40,4 @@ public class IngredientController {
         return "testing works";
     }
 
-
-//    @GetMapping("/{id}")
-//    public Ingredient findIngredientById(@PathVariable("id") Long IngredientId) {
-//        return ingredientService.findIngredientById(IngredientId);
-//    }
-
-//    @GetMapping("/{id}")
-//    public Department findDepartmentById(@PathVariable("id") Long departmentId) {
-//        log.info("Inside findDepartmentById of DepartmentService");
-//        return departmentService.findDepartmentById(departmentId);
-//
-//    }
-
-
 }
