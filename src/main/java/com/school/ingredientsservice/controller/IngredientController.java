@@ -37,10 +37,10 @@ public class IngredientController {
 //    }
 
 
-    @GetMapping("/{id}")
-    public ResponseTemplateVO getIngredientWithStock(@PathVariable("id") Long IngredientId) {
-        return ingredientService.getIngredientWithStock(IngredientId);
-    }
+//    @GetMapping("/{id}")
+//    public ResponseTemplateVO getIngredientWithStock(@PathVariable("id") Long IngredientId) {
+//        return ingredientService.getIngredientWithStock(IngredientId);
+//    }
 
     @DeleteMapping("/delete/{id}")
     public void deleteIngredientById(@PathVariable("id") Long ingredientId) {
