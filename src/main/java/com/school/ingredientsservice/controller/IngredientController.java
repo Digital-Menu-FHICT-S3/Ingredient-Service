@@ -30,18 +30,6 @@ public class IngredientController {
         return ingredientService.saveIngredient(ingredient);
     }
 
-//    @GetMapping("/{id}")
-//    public ResponsTemplateVO getIngredientWithStock(@PathVariable("id") Long IngredientId) {
-//        log.info("Inside getUserWithDepartment of UserController");
-//        return userService.getUserWithDepartment(userId);
-//    }
-
-
-//    @GetMapping("/{id}")
-//    public ResponseTemplateVO getIngredientWithStock(@PathVariable("id") Long IngredientId) {
-//        return ingredientService.getIngredientWithStock(IngredientId);
-//    }
-
     @DeleteMapping("/delete/{id}")
     public void deleteIngredientById(@PathVariable("id") Long ingredientId) {
         ingredientService.deleteIngredientById(ingredientId);
