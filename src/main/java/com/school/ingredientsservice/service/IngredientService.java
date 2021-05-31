@@ -5,6 +5,7 @@ import com.school.ingredientsservice.VO.Stock;
 import com.school.ingredientsservice.entity.Ingredient;
 import com.school.ingredientsservice.repository.IngredientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -19,17 +20,21 @@ public class IngredientService {
     @Autowired
     private RestTemplate restTemplate;
 
+    public List<Ingredient> getAllIngredientsInOrder() {
+        return ingredientRepository.findAll(Sort.by(Sort.Direction.ASC, "name"));
+    }
 
     public List<Ingredient> getAllIngredients() {
         return ingredientRepository.findAll();
     }
 
-
-
     public Ingredient saveIngredient(Ingredient ingredient) {
         return ingredientRepository.save(ingredient);
     }
 
+    public void deleteIngredientById(Long ingredientId) {
+        ingredientRepository.deleteById(ingredientId);
+    }
 
     public ResponseTemplateVO getIngredientWithStock(Long ingredientId) {
         ResponseTemplateVO vo = new ResponseTemplateVO();

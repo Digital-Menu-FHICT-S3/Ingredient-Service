@@ -16,8 +16,13 @@ public class IngredientController {
     private IngredientService ingredientService;
 
     @GetMapping("/all")
-    public List<Ingredient> ingredients(@RequestBody Ingredient ingredient) {
+    public List<Ingredient> getAllIngredients() {
         return ingredientService.getAllIngredients();
+    }
+
+    @GetMapping("/allInOrder")
+    public List<Ingredient> getAllIngredientsInOrder() {
+        return ingredientService.getAllIngredientsInOrder();
     }
 
     @PostMapping("/create")
@@ -35,6 +40,16 @@ public class IngredientController {
     @GetMapping("/{id}")
     public ResponseTemplateVO getIngredientWithStock(@PathVariable("id") Long IngredientId) {
         return ingredientService.getIngredientWithStock(IngredientId);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public void deleteIngredientById(@PathVariable("id") Long ingredientId) {
+        ingredientService.deleteIngredientById(ingredientId);
+    }
+
+    @GetMapping("test")
+    public String Test() {
+        return "testing works";
     }
 
 
