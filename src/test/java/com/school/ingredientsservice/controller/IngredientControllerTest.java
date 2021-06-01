@@ -2,38 +2,29 @@ package com.school.ingredientsservice.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.school.ingredientsservice.entity.Ingredient;
-import com.school.ingredientsservice.service.IngredientService;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabase;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.RequestBuilder;
-import org.springframework.test.web.servlet.ResultMatcher;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import java.io.UnsupportedEncodingException;
+import javax.transaction.Transactional;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.when;
-import static org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType.H2;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ActiveProfiles("test")
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 @AutoConfigureMockMvc
+@Transactional
 class IngredientControllerTest {
 
     @Autowired
@@ -41,25 +32,6 @@ class IngredientControllerTest {
 
     @Autowired
     private MockMvc mvc;
-
-    @Autowired
-    private IngredientService ingredientService;
-
-    @Test
-    void shouldGetAllIngredients() throws Exception {
-        MvcResult result = mvc.perform(get("/ingredient/all")
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andReturn();
-
-        String resultIngredient = result.getResponse().getContentAsString();
-        assertNotNull(resultIngredient);
-    }
-
-    @Test
-    void getAllIngredientsInOrder() {
-    }
 
     @Test
     void saveIngredient() throws Exception {
@@ -77,10 +49,47 @@ class IngredientControllerTest {
     }
 
     @Test
-    void deleteIngredientById() {
+    void shouldGetAllIngredients() throws Exception {
+        mvc.perform(get("/ingredient/all")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.[0].ingredientId").value(1L))
+                .andExpect(jsonPath("$.[0].name").value("Steak"))
+                .andExpect(jsonPath("$.[0].amount").value(10))
+                .andExpect(jsonPath("$.[1].ingredientId").value(2L))
+                .andExpect(jsonPath("$.[1].name").value("Rice"))
+                .andExpect(jsonPath("$.[1].amount").value(100))
+                .andExpect(jsonPath("$.[2].ingredientId").value(3L))
+                .andExpect(jsonPath("$.[2].name").value("Potatoes"))
+                .andExpect(jsonPath("$.[2].amount").value(50));
     }
 
     @Test
-    void test() {
+    void getAllIngredientsInOrder() throws Exception {
+        mvc.perform(get("/ingredient/allInOrder")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.[0].ingredientId").value(3L))
+                .andExpect(jsonPath("$.[0].name").value("Potatoes"))
+                .andExpect(jsonPath("$.[0].amount").value(50))
+                .andExpect(jsonPath("$.[1].ingredientId").value(2L))
+                .andExpect(jsonPath("$.[1].name").value("Rice"))
+                .andExpect(jsonPath("$.[1].amount").value(100))
+                .andExpect(jsonPath("$.[2].ingredientId").value(1L))
+                .andExpect(jsonPath("$.[2].name").value("Steak"))
+                .andExpect(jsonPath("$.[2].amount").value(10));
     }
+
+    @Test
+    void deleteIngredientById() throws Exception {
+        mvc.perform(MockMvcRequestBuilders
+                .delete("/ingredient/delete/1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+    }
+
+
 }

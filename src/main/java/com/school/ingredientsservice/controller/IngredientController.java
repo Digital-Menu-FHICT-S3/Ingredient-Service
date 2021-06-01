@@ -34,10 +34,4 @@ public class IngredientController {
     public void deleteIngredientById(@PathVariable("id") Long ingredientId) {
         ingredientService.deleteIngredientById(ingredientId);
     }
-
-    @GetMapping("test")
-    public String Test() {
-        return "testing works";
-    }
-
 }
