@@ -1,6 +1,5 @@
 package com.school.ingredientsservice.controller;
 
-import com.school.ingredientsservice.VO.ResponseTemplateVO;
 import com.school.ingredientsservice.entity.Ingredient;
 import com.school.ingredientsservice.service.IngredientService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -35,7 +35,7 @@ class IngredientControllerTest {
 
     @Test
     void saveIngredient() throws Exception {
-        Ingredient ingredientToPost = new Ingredient(19L, "Frikandel", 20);
+        Ingredient ingredientToPost = new Ingredient("Frikandel", 20);
         String ingredientAsString = mapper.writeValueAsString(ingredientToPost);
 
         mvc.perform(post("/ingredient/create")
@@ -43,7 +43,6 @@ class IngredientControllerTest {
                 .content(ingredientAsString)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.ingredientId").value(1L))
                 .andExpect(jsonPath("$.name").value("Frikandel"))
                 .andExpect(jsonPath("$.amount").value(20));
     }
