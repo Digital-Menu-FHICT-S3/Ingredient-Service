@@ -16,11 +16,14 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.ResultMatcher;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.io.UnsupportedEncodingException;
 
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 import static org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType.H2;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -43,13 +46,15 @@ class IngredientControllerTest {
     private IngredientService ingredientService;
 
     @Test
-    void getAllIngredients() throws Exception {
+    void shouldGetAllIngredients() throws Exception {
+        MvcResult result = mvc.perform(get("/ingredient/all")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn();
 
-         mvc.perform(get("/ingredient/all")
-                 .contentType(MediaType.APPLICATION_JSON)
-                 .accept(MediaType.APPLICATION_JSON))
-                 .andExpect(status().isOk())
-                 .andReturn();
+        String resultIngredient = result.getResponse().getContentAsString();
+        assertNotNull(resultIngredient);
     }
 
     @Test
