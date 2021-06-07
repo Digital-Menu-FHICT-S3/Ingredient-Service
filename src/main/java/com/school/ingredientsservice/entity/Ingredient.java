@@ -19,12 +19,16 @@ public class Ingredient {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long ingredientId;
-    private String name;
     private int amount;
+    private String name;
 
     public Ingredient(String name, int amount) {
         this.name = name;
         this.amount = amount;
+    }
+
+    public Ingredient(String name) {
+        this.name = name;
     }
 }
 
