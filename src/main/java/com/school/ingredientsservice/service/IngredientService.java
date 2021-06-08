@@ -9,10 +9,20 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class IngredientService {
+
+    private static List<Ingredient> list = new ArrayList<>();
+
+    static {
+        list.add(new Ingredient(1L, "Moo", 20));
+        list.add(new Ingredient(2L, "Tessa", 12));
+
+    }
 
     @Autowired
     private IngredientRepository ingredientRepository;
@@ -36,19 +46,32 @@ public class IngredientService {
         ingredientRepository.deleteById(ingredientId);
     }
 
-//    public ResponseTemplateVO getIngredientWithStock(Long ingredientId) {
-//        ResponseTemplateVO vo = new ResponseTemplateVO();
-//        Ingredient ingredient = ingredientRepository.findByIngredientId(ingredientId);
-//
-//        Stock stock = restTemplate.getForObject("http://STOCK-SERVICE/stock/" + ingredient.getStockId(), Stock.class);
-//
-//        vo.setIngredient(ingredient);
-//        vo.setStock(stock);
-//
-//        return vo;
-//    }
+    public void addIngredient(){
+
+    }
 
     public Ingredient findIngredientById(Long ingredientId) {
         return ingredientRepository.findByIngredientId(ingredientId);
     }
+
+    //update the stock
+    public void updateIngredient(Ingredient ingredient, Long ingredientId) {
+
+       getAllIngredients().stream().map(i -> {
+           if(i.getIngredientId()==ingredientId)
+           {
+               i.setAmount(ingredient.getAmount());
+           }
+           return i;
+       });
+    }
+
+//    //update the stock
+//    public Ingredient updateIngredient(Ingredient ingredient, Long ingredientId) {
+//        findIngredientById(ingredientId);
+//
+//        ingredient.setAmount(ingredient.getAmount());
+//        final Ingredient updateIngredient = ingredientRepository.save(ingredient);
+//        return updateIngredient;
+//    }
 }

@@ -30,17 +30,14 @@ public class IngredientController {
         return ingredientService.saveIngredient(ingredient);
     }
 
-//    @GetMapping("/{id}")
-//    public ResponsTemplateVO getIngredientWithStock(@PathVariable("id") Long IngredientId) {
-//        log.info("Inside getUserWithDepartment of UserController");
-//        return userService.getUserWithDepartment(userId);
-//    }
+
+    @PutMapping("/update/{id}")
+    public Ingredient updateIngredient(@RequestBody Ingredient ingredient, @PathVariable("id") Long ingredientId) {
+        ingredientService.updateIngredient(ingredient, ingredientId);
+        return ingredient;
+    }
 
 
-//    @GetMapping("/{id}")
-//    public ResponseTemplateVO getIngredientWithStock(@PathVariable("id") Long IngredientId) {
-//        return ingredientService.getIngredientWithStock(IngredientId);
-//    }
 
     @DeleteMapping("/delete/{id}")
     public void deleteIngredientById(@PathVariable("id") Long ingredientId) {
@@ -57,13 +54,5 @@ public class IngredientController {
 //    public Ingredient findIngredientById(@PathVariable("id") Long IngredientId) {
 //        return ingredientService.findIngredientById(IngredientId);
 //    }
-
-//    @GetMapping("/{id}")
-//    public Department findDepartmentById(@PathVariable("id") Long departmentId) {
-//        log.info("Inside findDepartmentById of DepartmentService");
-//        return departmentService.findDepartmentById(departmentId);
-//
-//    }
-
 
 }
