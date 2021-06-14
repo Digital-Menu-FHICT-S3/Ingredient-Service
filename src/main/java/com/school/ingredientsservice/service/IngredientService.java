@@ -54,24 +54,13 @@ public class IngredientService {
         return ingredientRepository.findByIngredientId(ingredientId);
     }
 
+
     //update the stock
-    public void updateIngredient(Ingredient ingredient, Long ingredientId) {
+    public Ingredient updateIngredient(Ingredient ingredient, Long ingredientId) {
+        findIngredientById(ingredientId);
 
-       getAllIngredients().stream().map(i -> {
-           if(i.getIngredientId()==ingredientId)
-           {
-               i.setAmount(ingredient.getAmount());
-           }
-           return i;
-       });
+        ingredient.setAmount(ingredient.getAmount());
+        final Ingredient updateIngredient = ingredientRepository.save(ingredient);
+        return updateIngredient;
     }
-
-//    //update the stock
-//    public Ingredient updateIngredient(Ingredient ingredient, Long ingredientId) {
-//        findIngredientById(ingredientId);
-//
-//        ingredient.setAmount(ingredient.getAmount());
-//        final Ingredient updateIngredient = ingredientRepository.save(ingredient);
-//        return updateIngredient;
-//    }
 }
