@@ -15,6 +15,9 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import javax.transaction.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -91,4 +94,32 @@ class IngredientControllerTest {
     }
 
 
+    @Test
+    void subtractIngredient() throws Exception{
+
+        List<Ingredient> ingredients = new ArrayList<>();
+        ingredients.add(new Ingredient(2L, 20, null));
+        String ingredientListString = mapper.writeValueAsString(ingredients);
+
+        mvc.perform(post("/ingredient/subtract")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(ingredientListString)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+
+        mvc.perform(get("/ingredient/all")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.[0].ingredientId").value(1L))
+                .andExpect(jsonPath("$.[0].name").value("Steak"))
+                .andExpect(jsonPath("$.[0].amount").value(10))
+                .andExpect(jsonPath("$.[1].ingredientId").value(2L))
+                .andExpect(jsonPath("$.[1].name").value("Rice"))
+                .andExpect(jsonPath("$.[1].amount").value(80))
+                .andExpect(jsonPath("$.[2].ingredientId").value(3L))
+                .andExpect(jsonPath("$.[2].name").value("Potatoes"))
+                .andExpect(jsonPath("$.[2].amount").value(50));
+
+    }
 }
