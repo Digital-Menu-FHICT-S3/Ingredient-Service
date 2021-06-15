@@ -33,4 +33,9 @@ public class IngredientController {
     public void deleteIngredientById(@PathVariable("id") Long ingredientId) {
         ingredientService.deleteIngredientById(ingredientId);
     }
+
+    @PostMapping("/subtract")
+    public void subtractIngredient(@RequestBody List<Ingredient> ingredients) {
+        ingredientService.subtractStock(ingredients);
+    }
 }

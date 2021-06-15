@@ -37,4 +37,10 @@ public class IngredientService {
     public Ingredient findIngredientById(Long ingredientId) {
         return ingredientRepository.findByIngredientId(ingredientId);
     }
+
+    public void subtractStock(List<Ingredient> ingredients) {
+        for (var ingredient : ingredients) {
+            ingredientRepository.subtractStock(ingredient.getAmount(), ingredient.getIngredientId());
+        }
+    }
 }
